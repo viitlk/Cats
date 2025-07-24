@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Net.Http;
@@ -35,6 +35,9 @@ namespace Cats
 
             if (loading) return;
 
+            string tempPath = Path.Combine(Path.GetTempPath(), fileName);
+            File.Delete(tempPath);
+
             try
             {
                 loading = true;
@@ -52,7 +55,7 @@ namespace Cats
                     byte[] imageData = await response.Content.ReadAsByteArrayAsync();
 
                     fileName = $"{DateTime.Now.Ticks}.jpg";
-                    string tempPath = Path.Combine(Path.GetTempPath(), fileName);
+                    tempPath = Path.Combine(Path.GetTempPath(), fileName);
 
                     await Task.Run(() => File.WriteAllBytes(tempPath, imageData));
 
