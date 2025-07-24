@@ -35,8 +35,11 @@ namespace Cats
 
             if (loading) return;
 
-            string tempPath = Path.Combine(Path.GetTempPath(), fileName);
-            File.Delete(tempPath);
+            if (fileName != "")
+            {
+                string tempPath = Path.Combine(Path.GetTempPath(), fileName);
+                File.Delete(tempPath);
+            }
 
             try
             {
@@ -55,7 +58,7 @@ namespace Cats
                     byte[] imageData = await response.Content.ReadAsByteArrayAsync();
 
                     fileName = $"{DateTime.Now.Ticks}.jpg";
-                    tempPath = Path.Combine(Path.GetTempPath(), fileName);
+                    string tempPath = Path.Combine(Path.GetTempPath(), fileName);
 
                     await Task.Run(() => File.WriteAllBytes(tempPath, imageData));
 
